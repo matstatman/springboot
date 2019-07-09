@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  application:
+    build: .
+    entrypoint: java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=docker -jar /app.jar
+    ports:
+    - 80:7788
+
+  db:
+    image: postgres
+    ports:
+    - 5432:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db

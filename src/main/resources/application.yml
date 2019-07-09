@@ -1,0 +1,44 @@
+server:
+  port: 7788
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost/db"
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL92Dialect
+      jdbc:
+        lob:
+          non_contextual_creation: true
+
+  jackson:
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
+
+---
+
+spring:
+  profiles: prod
+  datasource:
+    url: "jdbc:postgresql://x/db"
+    username: postgres
+    password: x
+server:
+  port: 80
+
+---
+
+spring:
+  profiles: docker
+  datasource:
+    url: "jdbc:postgresql://db/db"

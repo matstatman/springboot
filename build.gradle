@@ -1,0 +1,61 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.6.RELEASE'
+    }
+
+	repositories {
+		mavenCentral()
+		maven { url 'https://repo.spring.io/milestone' }
+	    maven { url 'https://plugins.gradle.org/m2/' }
+	}
+	
+	dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.franzbecker:gradle-lombok:3.1.0"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'java-library'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.gradle.java'
+apply plugin: 'io.franzbecker.gradle-lombok'
+
+compileJava {
+  sourceCompatibility = '12'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+    }
+}
+
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }
+}
+
+dependencies {
+    compile group: 'org.javassist', name: 'javassist', version: '3.25.0-GA'
+	compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+
+	compile "io.springfox:springfox-swagger2:2.9.2"
+	compile "io.springfox:springfox-swagger-ui:2.9.2"
+	compile "org.apache.commons:commons-lang3:3.9"
+    compile "org.postgresql:postgresql:42.2.6"
+    compile "javax.xml.bind:jaxb-api:2.3.1"
+
+    testCompile "com.h2database:h2:1.4.199"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.spockframework:spock-core:1.3-groovy-2.5"
+    testCompile "org.spockframework:spock-spring:1.3-groovy-2.5"
+}
